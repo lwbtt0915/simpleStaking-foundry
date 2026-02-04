@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
-
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
@@ -166,7 +165,8 @@ contract SimpleStaking is Ownable {
         require(token != address(0), "Invalid token address");
         require(amount > 0, "Amount must be positive");
         
-        IERC20(token).transfer(owner(), amount);
+        bool success = IERC20(token).transfer(owner(), amount);
+        require(success, "Emergency withdraw failed");
     }
 
 
